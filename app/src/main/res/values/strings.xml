@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">TellMe</string>
+    <string name="password_length">Password tidak boleh kurang dari 8 karakter!</string>
+    <string name="register">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Ceritakan tentang masalah, keseharian dan kesedihanmu kepada "diriku"</string>
+    <string name="title_welcome_page">Selamat datang di TellMe!</string>
+    <string name="title_register_page">Lengkapi data dirimu di bawah ini ya</string>
+    <string name="message_login_page">Masukkan dulu data kamu dulu ya</string>
+    <string name="title_register">Daftar / Register</string>
+    <string name="title_login_page">Welcome to TellMe</string>
+    <string name="title_login">Formulir Masuk</string>
+    <string name="email">Email</string>
+    <string name="email_validation">Alamat email anda tidak valid!</string>
+    <string name="password">Password</string>
+    <string name="required_field">Field tidak boleh kosong!</string>
+    <string name="name">Nama</string>
+    <string name="username">Halo, %1$s</string>
+    <string name="logout">Keluar</string>
+    <string name="input_image">Silahkan masukan file gambar terlebih dahulu!</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="story_detail">Detail Cerita</string>
+    <string name="title_add_story">Tambah Cerita</string>
+    <string name="take_picture">Ambil Gambar</string>
+    <string name="open_file">Buka Gambar</string>
+    <string name="desc">Deskripsi Gambar</string>
+    <string name="upload_picture">Upload Gambar</string>
+    <string name="story">Cerita</string>
+    <string name="retry">Muat ulang</string>
+    <string name="language">Ganti Bahasa</string>
+
+    <string name="error">Erorr</string>
+</resources>

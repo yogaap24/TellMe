@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TellMe</string>
+    <string name="password_length">Password must be at least 8 characters long!</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="message_welcome_page">Tell me about your problems, daily life, and sorrows to "me"</string>
+    <string name="title_welcome_page">Welcome to TellMe!</string>
+    <string name="title_register_page">Complete your information below</string>
+    <string name="message_login_page">Please enter your data first</string>
+    <string name="title_register">Register</string>
+    <string name="title_login_page">Welcome to TellMe</string>
+    <string name="title_login">Login Form</string>
+    <string name="email">Email</string>
+    <string name="email_validation">Your email address is not valid!</string>
+    <string name="password">Password</string>
+    <string name="required_field">Field must not be empty!</string>
+    <string name="name">Name</string>
+    <string name="username">Hello, %1$s</string>
+    <string name="logout">Logout</string>
+    <string name="input_image">Please input the image file first!</string>
+    <string name="add_story">Add Story</string>
+    <string name="story_detail">Story Details</string>
+    <string name="title_add_story">Add Story</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="open_file">Open File</string>
+    <string name="desc">Image Description</string>
+    <string name="upload_picture">Upload Picture</string>
+    <string name="story">Story</string>
+    <string name="retry">Reload</string>
+    <string name="language">Change Language</string>
+
+    <string name="error">Erorr</string>
+</resources>

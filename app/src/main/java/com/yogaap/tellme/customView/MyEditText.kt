@@ -65,7 +65,7 @@ class MyEditText : TextInputEditText {
                     }
 
                     PASSWORD -> {
-                        if (input.length < 6) {
+                        if (input.length < 8) {
                             error =
                                 context.getString(com.yogaap.tellme.R.string.password_length)
                             isError = true
@@ -89,7 +89,7 @@ class MyEditText : TextInputEditText {
                     }
 
                     PASSWORD -> {
-                        if (input.length < 6) {
+                        if (input.length < 8) {
                             error =
                                 context.getString(com.yogaap.tellme.R.string.password_length)
                             isError = true

@@ -1,4 +1,4 @@
-package com.yogaap.tellme.View
+package com.yogaap.tellme.UI.View
 
 import android.Manifest
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.yogaap.tellme.Data.di.ViewModelFactory
 import com.yogaap.tellme.Data.di.createCustomTempFile
 import com.yogaap.tellme.Data.di.reduceFileImage
@@ -22,7 +25,7 @@ import com.yogaap.tellme.Data.di.rotateBitmap
 import com.yogaap.tellme.Data.di.uriToFile
 import com.yogaap.tellme.R
 import com.yogaap.tellme.databinding.ActivityAddStoryBinding
-import com.yogaap.tellme.viewModel.AddStoryViewModel
+import com.yogaap.tellme.UI.viewModel.AddStoryViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -36,6 +39,7 @@ class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
     private lateinit var factory: ViewModelFactory
     private lateinit var currentPhotoPath: String
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var getFile: File? = null
     private val addStoryViewModel: AddStoryViewModel by viewModels { factory }
 
@@ -78,6 +82,44 @@ class AddStoryActivity : AppCompatActivity() {
     private fun setupView() {
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        binding.apply {
+            btnTakePicture.setOnClickListener { takePicture() }
+            btnOpenFile.setOnClickListener { startGallery() }
+            btnUpload.setOnClickListener { uploadStory() }
+        }
+
+        binding.checkBox.setOnClickListener{
+            if(binding.checkBox.isChecked) {
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ),
+                        REQUEST_CODE_PERMISSIONS
+                    )
+                }
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location ->
+                        if (location != null) {
+                            uploadStory()
+                        }
+                    }
+            } else {
+                uploadStory()
+            }
+        }
 
         supportActionBar?.apply {
             title = getString(R.string.title_add_story)
@@ -153,11 +195,47 @@ class AddStoryActivity : AppCompatActivity() {
                     file.name,
                     requestImageFile
                 )
-                uploadResponse(
-                    it.token,
-                    imageMultipart,
-                    binding.edtDescStory.text.toString().toRequestBody("text/plain".toMediaType())
-                )
+
+                // Check if location permission is granted
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Request location once
+                    fusedLocationClient.lastLocation
+                        .addOnSuccessListener { location ->
+                            if (location != null) {
+                                Log.d("Check Location", "uploadStory: ${location.latitude}, ${location.longitude}")
+                                uploadResponse(
+                                    it.token,
+                                    imageMultipart,
+                                    binding.edtDescStory.text.toString().toRequestBody("text/plain".toMediaType()),
+                                    location.latitude,
+                                    location.longitude
+                                )
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            // Handle location request failure
+                            e.printStackTrace()
+                            uploadResponse(
+                                it.token,
+                                imageMultipart,
+                                binding.edtDescStory.text.toString().toRequestBody("text/plain".toMediaType())
+                            )
+                        }
+                } else {
+                    // Location permission not granted, upload without location
+                    uploadResponse(
+                        it.token,
+                        imageMultipart,
+                        binding.edtDescStory.text.toString().toRequestBody("text/plain".toMediaType())
+                    )
+                }
             } else {
                 Toast.makeText(
                     this@AddStoryActivity,
@@ -171,9 +249,11 @@ class AddStoryActivity : AppCompatActivity() {
     private fun uploadResponse(
         token: String,
         file: MultipartBody.Part,
-        description: RequestBody
+        description: RequestBody,
+        lat: Double? = 0.0,
+        lon: Double? = 0.0
     ) {
-        addStoryViewModel.uploadStory(token, file, description)
+        addStoryViewModel.uploadStory(token, file, description, lat, lon)
         addStoryViewModel.uploadResponse.observe(this@AddStoryActivity) {
             if (!it.error) {
                 moveActivity()

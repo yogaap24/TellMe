@@ -28,6 +28,16 @@
     <string name="story">Cerita</string>
     <string name="retry">Muat ulang</string>
     <string name="language">Ganti Bahasa</string>
-
+    <string name="map">Peta</string>
+    <string name="normal_type">Normal</string>
+    <string name="satellite_type">Satellite</string>
+    <string name="terrain_type">Terrain</string>
+    <string name="hybrid_type">Hybrid</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="empty_image_warning">Gambar tidak ditemukan</string>
+    <string name="location_message">Lokasi Anda berhasil diizinkan</string>
     <string name="error">Erorr</string>
+    <string name="title_story">Judul Cerita</string>
+    <string name="desc_story">Deskripsi Cerita</string>
+    <string name="img_story">Gambar Cerita</string>
 </resources>

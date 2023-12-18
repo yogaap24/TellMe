@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.LoginActivity">
+    tools:context=".UI.View.LoginActivity">
 
     <ImageView
         android:id="@+id/iv_login"
@@ -79,7 +79,7 @@
         app:startIconDrawable="@drawable/ic_baseline_email_24"
         tools:alpha="100">
 
-        <com.yogaap.tellme.customView.MyEditText
+        <com.yogaap.tellme.UI.customView.MyEditText
             android:id="@+id/edt_email_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
-        <com.yogaap.tellme.customView.MyEditText
+        <com.yogaap.tellme.UI.customView.MyEditText
             android:id="@+id/edt_password_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,6 +138,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_password_login" />
+
+    <ProgressBar
+        android:id="@+id/pb_login"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/leaf"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal"

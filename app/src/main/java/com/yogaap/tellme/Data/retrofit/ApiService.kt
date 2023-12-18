@@ -43,12 +43,21 @@ interface ApiService {
         @Query("size") size: Int
      ): Response<StoriesResponse>
 
+    // Get List Stories With Location
+    @GET("stories")
+    fun getListStoriesWithLocation(
+        @Header("Authorization") token: String,
+        @Query("location") loc: Int = 1
+    ): Call<StoriesResponse>
+
     // Post Story
     @Multipart
     @POST("stories")
     fun postStory(
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody
+        @Part("description") description: RequestBody,
+        @Part("lat") lat: Double?,
+        @Part("lon") lon: Double?
     ): Call<AddStoryResponse>
 }

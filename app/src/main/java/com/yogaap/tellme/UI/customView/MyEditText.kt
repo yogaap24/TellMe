@@ -1,4 +1,4 @@
-package com.yogaap.tellme.customView
+package com.yogaap.tellme.UI.customView
 
 import android.content.Context
 import android.graphics.Canvas

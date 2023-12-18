@@ -1,4 +1,4 @@
-package com.yogaap.tellme.View
+package com.yogaap.tellme.UI.View
 
 import android.util.Log
 import androidx.paging.PagingSource

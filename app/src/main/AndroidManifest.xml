@@ -5,13 +5,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
+
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <category android:name="android.intent.category.BROWSABLE" />
+
             <data android:scheme="https" />
         </intent>
     </queries>
@@ -26,23 +34,43 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.TellMe"
         tools:targetApi="31">
+
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCs-WeU05mGZU5V2Qy-0of5Co3gvY-AtCc" />
+
         <activity
-            android:name=".View.WelcomeActivity"
+            android:name=".UI.View.MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".UI.View.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".View.AddStoryActivity"
+            android:name=".UI.View.AddStoryActivity"
             android:exported="false" />
         <activity
-            android:name=".View.detail.DetailStoryActivity"
+            android:name=".UI.View.detail.DetailStoryActivity"
             android:exported="false" />
         <activity
-            android:name=".View.RegisterActivity"
+            android:name=".UI.View.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".View.LoginActivity"
+            android:name=".UI.View.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".View.MainActivity"
+            android:name=".UI.View.MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -51,6 +79,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.yogaap.tellme"

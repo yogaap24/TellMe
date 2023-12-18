@@ -12,7 +12,7 @@ data class StoriesResponse(
     val message: String,
 
     @field:SerializedName("listStory")
-    val listStory: List<ListStoryItem>
+    val listStory: List<ListStoryItem> = emptyList()
 )
 
 @Suppress("DEPRECATED_ANNOTATION")
@@ -31,10 +31,10 @@ data class ListStoryItem(
     val photo: String,
 
     @field:SerializedName("lon")
-    val lon: Double,
+    val lon: Double? = 0.0,
 
     @field:SerializedName("lat")
-    val lat: Double,
+    val lat: Double? = 0.0,
 
     @field:SerializedName("createdAt")
     val createdAt: String,

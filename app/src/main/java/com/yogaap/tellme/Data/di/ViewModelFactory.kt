@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.yogaap.tellme.Data.database.StoryRepository
-import com.yogaap.tellme.viewModel.AddStoryViewModel
-import com.yogaap.tellme.viewModel.LoginViewModel
-import com.yogaap.tellme.viewModel.MainViewModel
-import com.yogaap.tellme.viewModel.RegisterViewModel
+import com.yogaap.tellme.UI.viewModel.AddStoryViewModel
+import com.yogaap.tellme.UI.viewModel.LoginViewModel
+import com.yogaap.tellme.UI.viewModel.MainViewModel
+import com.yogaap.tellme.UI.viewModel.RegisterViewModel
 
 class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")

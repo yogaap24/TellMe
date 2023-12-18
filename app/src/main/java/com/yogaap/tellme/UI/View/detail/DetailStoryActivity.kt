@@ -1,4 +1,4 @@
-package com.yogaap.tellme.View.detail
+package com.yogaap.tellme.UI.View.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

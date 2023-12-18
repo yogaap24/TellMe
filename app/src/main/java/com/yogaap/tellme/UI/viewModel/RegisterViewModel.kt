@@ -1,4 +1,4 @@
-package com.yogaap.tellme.viewModel
+package com.yogaap.tellme.UI.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

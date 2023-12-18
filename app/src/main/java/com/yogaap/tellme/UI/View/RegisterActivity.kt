@@ -1,4 +1,4 @@
-package com.yogaap.tellme.View
+package com.yogaap.tellme.UI.View
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.yogaap.tellme.Data.di.ViewModelFactory
 import com.yogaap.tellme.R
 import com.yogaap.tellme.databinding.ActivityRegisterBinding
-import com.yogaap.tellme.viewModel.RegisterViewModel
+import com.yogaap.tellme.UI.viewModel.RegisterViewModel
 
 @Suppress("DEPRECATION")
 class RegisterActivity : AppCompatActivity() {

@@ -1,7 +1,8 @@
-package com.yogaap.tellme.adapter
+package com.yogaap.tellme.UI.adapter
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
@@ -14,7 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.yogaap.tellme.Data.di.timeStamptoString
 import com.yogaap.tellme.R
 import com.yogaap.tellme.Response.ListStoryItem
-import com.yogaap.tellme.View.detail.DetailStoryActivity
+import com.yogaap.tellme.UI.View.detail.DetailStoryActivity
 import com.yogaap.tellme.databinding.StoriesRowBinding
 
 class ListStoryAdapter :
@@ -50,6 +51,7 @@ class ListStoryAdapter :
                     ).into(ivStoryRow)
 
                 itemView.setOnClickListener {
+                    Log.d("Data Story", "story: $story")
                     val intent = Intent(itemView.context, DetailStoryActivity::class.java)
 
                     intent.putExtra(DetailStoryActivity.NAME, story.name)

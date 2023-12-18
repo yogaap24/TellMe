@@ -1,4 +1,4 @@
-package com.yogaap.tellme.View
+package com.yogaap.tellme.UI.View
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -12,7 +12,7 @@ import com.yogaap.tellme.Data.di.ViewModelFactory
 import com.yogaap.tellme.Data.pref.SessionModel
 import com.yogaap.tellme.R
 import com.yogaap.tellme.databinding.ActivityLoginBinding
-import com.yogaap.tellme.viewModel.LoginViewModel
+import com.yogaap.tellme.UI.viewModel.LoginViewModel
 
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
@@ -62,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
                     edtPasswordLogin.error = getString(R.string.required_field)
                 } else if (edtEmailLogin.length() != 0 && edtPasswordLogin.length() != 0) {
                     postText()
+                    showLoading()
                     showToast()
                     loginViewModel.login()
                     moveActivity()
@@ -95,6 +96,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun showLoading() {
+        loginViewModel.isLoading.observe(this@LoginActivity) {
+            binding.pbLogin.visibility = if (it) View.VISIBLE else View.GONE
+        }
+    }
+
     private fun postText() {
         binding.apply {
             loginViewModel.postLogin(
@@ -107,6 +114,7 @@ class LoginActivity : AppCompatActivity() {
             saveSession(
                 SessionModel(
                     response.loginResult?.name.toString(),
+                    binding.edtEmailLogin.text.toString(),
                     AUTH_KEY + (response.loginResult?.token.toString()),
                     true
                 )

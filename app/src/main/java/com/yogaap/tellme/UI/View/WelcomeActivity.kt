@@ -1,4 +1,4 @@
-package com.yogaap.tellme.View
+package com.yogaap.tellme.UI.View
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator

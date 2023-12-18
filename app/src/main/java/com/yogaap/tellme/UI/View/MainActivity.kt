@@ -1,4 +1,4 @@
-package com.yogaap.tellme.View
+package com.yogaap.tellme.UI.View
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yogaap.tellme.Data.di.ViewModelFactory
 import com.yogaap.tellme.R
-import com.yogaap.tellme.adapter.ListStoryAdapter
-import com.yogaap.tellme.adapter.LoadingStateAdapter
+import com.yogaap.tellme.UI.adapter.ListStoryAdapter
+import com.yogaap.tellme.UI.adapter.LoadingStateAdapter
 import com.yogaap.tellme.databinding.ActivityMainBinding
-import com.yogaap.tellme.viewModel.MainViewModel
+import com.yogaap.tellme.UI.viewModel.MainViewModel
 
 
 @Suppress("DEPRECATION")
@@ -136,6 +136,11 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.btn_language -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                true
+            }
+            R.id.btn_map -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

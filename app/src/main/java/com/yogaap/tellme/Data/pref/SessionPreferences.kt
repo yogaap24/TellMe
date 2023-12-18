@@ -11,42 +11,39 @@ import kotlinx.coroutines.flow.map
 class SessionPreferences private constructor(private val dataStore: DataStore<Preferences>) {
 
     companion object {
-        @Volatile
-        private var INSTANCE: SessionPreferences? = null
         private val NAME_KEY = stringPreferencesKey("name")
+        private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
-        private val STATE_KEY = booleanPreferencesKey("state")
+        private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
 
-
-        fun getInstance(dataStore: DataStore<Preferences>): SessionPreferences =
-            INSTANCE ?: synchronized(this) {
-                val instance = SessionPreferences(dataStore)
-                INSTANCE = instance
-                instance
-            }
-    }
-
-    fun getSession(): Flow<SessionModel> {
-        return dataStore.data.map{ preferences ->
-            SessionModel(
-                preferences[NAME_KEY] ?: "",
-                preferences[TOKEN_KEY] ?: "",
-                preferences[STATE_KEY] ?: false
-            )
+        fun getInstance(dataStore: DataStore<Preferences>): SessionPreferences {
+            return SessionPreferences(dataStore)
         }
     }
 
-    suspend fun saveSession(session: SessionModel) {
+    suspend fun saveSession(user: SessionModel) {
         dataStore.edit { preferences ->
-            preferences[NAME_KEY] = session.name
-            preferences[TOKEN_KEY] = session.token
-            preferences[STATE_KEY] = session.isLogin
+            preferences[NAME_KEY] = user.name
+            preferences[EMAIL_KEY] = user.email
+            preferences[TOKEN_KEY] = user.token
+            preferences[IS_LOGIN_KEY] = true
+        }
+    }
+
+    fun getSession(): Flow<SessionModel> {
+        return dataStore.data.map { preferences ->
+            SessionModel(
+                preferences[NAME_KEY] ?: "",
+                preferences[EMAIL_KEY] ?: "",
+                preferences[TOKEN_KEY] ?: "",
+                preferences[IS_LOGIN_KEY] ?: false
+            )
         }
     }
 
     suspend fun login() {
         dataStore.edit { preferences ->
-            preferences[STATE_KEY] = true
+            preferences[IS_LOGIN_KEY] = true
         }
     }
 

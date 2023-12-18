@@ -17,7 +17,7 @@ import com.yogaap.tellme.Response.ListStoryItem
 import com.yogaap.tellme.Response.LoginResponse
 import com.yogaap.tellme.Response.RegisterResponse
 import com.yogaap.tellme.Response.StoriesResponse
-import com.yogaap.tellme.View.StoryPagingSource
+import com.yogaap.tellme.UI.View.StoryPagingSource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -115,9 +115,55 @@ class StoryRepository private constructor(
         ).liveData
     }
 
-    fun uploadStory(token: String, file: MultipartBody.Part, description: RequestBody) {
+    fun getListStoriesWithLocation(token: String) {
         _isLoading.value = true
-        val client = apiService.postStory(token, file, description)
+        val client = apiService.getListStoriesWithLocation(token)
+        Log.d(TAG, "getListStoriesWithLocation: $token")
+
+        client.enqueue(object : Callback<StoriesResponse> {
+            override fun onResponse(
+                call: Call<StoriesResponse>,
+                response: Response<StoriesResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val allStories = response.body()?.listStory
+                    if (allStories != null) {
+                        val storiesWithLocation = allStories.filter { it.lat != null && it.lon != null }
+                        _list.value = StoriesResponse(
+                            error = response.body()?.error ?: false,
+                            message = response.body()?.message ?: "",
+                            listStory = storiesWithLocation
+                        )
+                    }
+                } else if (response.code() == 401) {
+                    _toastText.value = Event("Unauthorized: Please check your credentials.")
+                } else {
+                    _toastText.value = Event(response.message().toString())
+                    Log.e(
+                        TAG,
+                        "onFailure: ${response.message()}, ${response.body()?.message.toString()}"
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
+                _isLoading.value = false
+                _toastText.value = Event(t.message.toString())
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
+    }
+
+    fun uploadStory(
+        token: String,
+        file: MultipartBody.Part,
+        description: RequestBody,
+        lat: Double?,
+        lon: Double?
+    ) {
+        _isLoading.value = true
+        val client = apiService.postStory(token, file, description, lat, lon)
 
         client.enqueue(object : Callback<AddStoryResponse> {
             override fun onResponse(
@@ -141,8 +187,7 @@ class StoryRepository private constructor(
                 Log.d("error upload", t.message.toString())
             }
 
-        }
-        )
+        })
     }
 
     fun getSession(): LiveData<SessionModel> {
@@ -163,6 +208,7 @@ class StoryRepository private constructor(
 
     companion object {
         private const val TAG = "StoryRepository"
+
         @Volatile
         private var instance: StoryRepository? = null
         fun getInstance(

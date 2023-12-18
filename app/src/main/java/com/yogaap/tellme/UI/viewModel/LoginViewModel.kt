@@ -1,4 +1,4 @@
-package com.yogaap.tellme.viewModel
+package com.yogaap.tellme.UI.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +10,7 @@ import com.yogaap.tellme.Response.LoginResponse
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: StoryRepository) : ViewModel() {
+    val isLoading: LiveData<Boolean> = repository.isLoading
     val loginResponse: LiveData<LoginResponse> = repository.loginResponse
     val toastText: LiveData<Event<String>> = repository.toastText
 

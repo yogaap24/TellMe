@@ -29,6 +29,16 @@
     <string name="story">Story</string>
     <string name="retry">Reload</string>
     <string name="language">Change Language</string>
-
+    <string name="map">Map</string>
+    <string name="normal_type">Normal</string>
+    <string name="satellite_type">Satellite</string>
+    <string name="terrain_type">Terrain</string>
+    <string name="hybrid_type">Hybrid</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="empty_image_warning">Image not found</string>
+    <string name="location_message">Your location has been allowed</string>
     <string name="error">Erorr</string>
+    <string name="title_story">Story Title</string>
+    <string name="desc_story">Story Description</string>
+    <string name="img_story">Story Image</string>
 </resources>

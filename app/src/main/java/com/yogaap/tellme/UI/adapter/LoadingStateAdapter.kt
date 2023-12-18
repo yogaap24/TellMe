@@ -1,4 +1,4 @@
-package com.yogaap.tellme.adapter
+package com.yogaap.tellme.UI.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

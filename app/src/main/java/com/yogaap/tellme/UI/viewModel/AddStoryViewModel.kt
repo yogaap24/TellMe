@@ -1,4 +1,4 @@
-package com.yogaap.tellme.viewModel
+package com.yogaap.tellme.UI.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -16,9 +16,15 @@ class AddStoryViewModel (private val repository: StoryRepository) : ViewModel() 
     val isLoading: LiveData<Boolean> = repository.isLoading
     val toastText: LiveData<Event<String>> = repository.toastText
 
-    fun uploadStory(token: String, file: MultipartBody.Part, description: RequestBody) {
+    fun uploadStory(
+        token: String,
+        file: MultipartBody.Part,
+        description: RequestBody,
+        lat: Double?,
+        lon: Double?
+    ) {
         viewModelScope.launch {
-            repository.uploadStory(token, file, description)
+            repository.uploadStory(token, file, description, lat, lon)
         }
     }
 

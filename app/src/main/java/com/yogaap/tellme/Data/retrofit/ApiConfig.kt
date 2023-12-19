@@ -12,7 +12,7 @@ class ApiConfig {
         fun getApiService(token: String): ApiService {
             val loggingInterceptor =
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            val authInterceptor = Interceptor { chain ->
+            Interceptor { chain ->
                 val req = chain.request()
                 val requestHeaders = req.newBuilder()
                     .addHeader("Authorization", "Bearer $token")

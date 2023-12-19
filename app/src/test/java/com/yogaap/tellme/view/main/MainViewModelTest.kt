@@ -12,13 +12,14 @@ import com.yogaap.tellme.Data.database.StoryRepository
 import com.yogaap.tellme.DataDummy
 import com.yogaap.tellme.MainDispatcherRule
 import com.yogaap.tellme.Response.ListStoryItem
-import com.yogaap.tellme.UI.adapter.UnitTestAdapter
+import com.yogaap.tellme.UI.adapter.ListStoryAdapter
 import com.yogaap.tellme.UI.viewModel.MainViewModel
 import com.yogaap.tellme.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,18 +49,25 @@ class MainViewModelTest {
         Mockito.`when`(storyRepository.getStories()).thenReturn(expectedStory)
 
         val mainViewModel = MainViewModel(storyRepository)
-        val actualStory: PagingData<ListStoryItem> = mainViewModel.story.getOrAwaitValue()
+        val actualStory: PagingData<ListStoryItem> = mainViewModel.getListStories.getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
-            diffCallback = UnitTestAdapter.DIFF_CALLBACK,
+            diffCallback = ListStoryAdapter.DIFF_ITEM_CALLBACK,
             updateCallback = noopListUpdateCallback,
             workerDispatcher = Dispatchers.Main,
         )
         differ.submitData(actualStory)
 
-        Assert.assertNotNull(differ.snapshot())
-        Assert.assertEquals(dummyStory.size, differ.snapshot().size)
-        Assert.assertEquals(dummyStory[0], differ.snapshot()[0])
+        assertNotNull(differ.snapshot())
+        assertEquals(dummyStory.size, differ.snapshot().size)
+        assertEquals(dummyStory[0], differ.snapshot()[0])
+    }
+
+    private val noopListUpdateCallback = object : ListUpdateCallback {
+        override fun onInserted(position: Int, count: Int) {}
+        override fun onRemoved(position: Int, count: Int) {}
+        override fun onMoved(fromPosition: Int, toPosition: Int) {}
+        override fun onChanged(position: Int, count: Int, payload: Any?) {}
     }
 
     @Test
@@ -69,14 +77,14 @@ class MainViewModelTest {
         expectedStory.value = data
         Mockito.`when`(storyRepository.getStories()).thenReturn(expectedStory)
         val mainViewModel = MainViewModel(storyRepository)
-        val actualStory: PagingData<ListStoryItem> = mainViewModel.story.getOrAwaitValue()
+        val actualStory: PagingData<ListStoryItem> = mainViewModel.getListStories.getOrAwaitValue()
         val differ = AsyncPagingDataDiffer(
-            diffCallback = UnitTestAdapter.DIFF_CALLBACK,
+            diffCallback = ListStoryAdapter.DIFF_ITEM_CALLBACK,
             updateCallback = noopListUpdateCallback,
             workerDispatcher = Dispatchers.Main,
         )
         differ.submitData(actualStory)
-        Assert.assertEquals(0, differ.snapshot().size)
+        assertEquals(0, differ.snapshot().size)
     }
 }
 
@@ -95,10 +103,4 @@ class StoryPagingSource : PagingSource<Int, LiveData<List<ListStoryItem>>>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<ListStoryItem>>> {
         return LoadResult.Page(emptyList(), 0, 1)
     }
-}
-val noopListUpdateCallback = object : ListUpdateCallback {
-    override fun onInserted(position: Int, count: Int) {}
-    override fun onRemoved(position: Int, count: Int) {}
-    override fun onMoved(fromPosition: Int, toPosition: Int) {}
-    override fun onChanged(position: Int, count: Int, payload: Any?) {}
 }

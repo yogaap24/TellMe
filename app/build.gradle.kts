@@ -79,7 +79,10 @@ dependencies {
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("com.squareup.okhttp3:mockwebserver:4.9.3")
+    androidTestImplementation ("com.squareup.okhttp3:okhttp-tls:4.9.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
     testImplementation("org.mockito:mockito-core:3.12.4")

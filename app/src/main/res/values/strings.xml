@@ -3,6 +3,7 @@
     <string name="password_length">Password tidak boleh kurang dari 8 karakter!</string>
     <string name="register">Daftar</string>
     <string name="login">Masuk</string>
+    <string name="next">Lanjut</string>
     <string name="message_welcome_page">Ceritakan tentang masalah, keseharian dan kesedihanmu kepada "diriku"</string>
     <string name="title_welcome_page">Selamat datang di TellMe!</string>
     <string name="title_register_page">Lengkapi data dirimu di bawah ini ya</string>

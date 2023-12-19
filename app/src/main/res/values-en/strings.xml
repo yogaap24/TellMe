@@ -4,6 +4,7 @@
     <string name="password_length">Password must be at least 8 characters long!</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="next">Next</string>
     <string name="message_welcome_page">Tell me about your problems, daily life, and sorrows to "me"</string>
     <string name="title_welcome_page">Welcome to TellMe!</string>
     <string name="title_register_page">Complete your information below</string>
